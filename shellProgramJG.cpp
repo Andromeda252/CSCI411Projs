@@ -55,6 +55,27 @@ int main() {
     else if (input == "environ") {
         system("env");
     }
+    else if (input.substr(0, 6) == "repeat") {
+        string command;
+        string word;
+        string operater;
+        string fileName;
+        stringstream inputstream(input);
+        inputstream >> command;
+        inputstream >> word;
+        if (inputstream >> operater) {
+            inputstream >> operater;
+            cout << "success";
+            fstream redirectFile;
+            inputstream >> fileName;
+            redirectFile.open(fileName, ios::in);
+            redirectFile << word;
+            redirectFile.close();
+        }
+        else {
+            cout << "failure";
+        }
+    }
     else if (input == "quit") {
         history.close();
         history.open("historyFile.txt", ios::out);
