@@ -64,8 +64,7 @@ int main() {
         inputstream >> command;
         inputstream >> word;
         if (inputstream >> operater) {
-            inputstream >> operater;
-            cout << "success";
+            cout << operater;
             fstream redirectFile;
             inputstream >> fileName;
             redirectFile.open(fileName, ios::in);
