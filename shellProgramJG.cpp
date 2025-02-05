@@ -5,13 +5,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sstream>
+#include <signal.h>
 
 using namespace std;
 
+fstream history;
+
+void signalHandler(int signum) {
+    history.close();
+    cout << "Caught signal " << signum << endl;
+    history.open("historyFile.txt", ios::out);
+    string content;
+    while(getline(history, content)) {
+        cout << content;
+    }
+    history.close();
+    system("quit");
+}
+
 int main() {
     string input;
-    fstream history;
+    
     history.open("historyFile.txt", ios::in);
+    signal(SIGINT, signalHandler);
+    //Endless* while loop
     cout << "InsertFunnyPromptHere:\\$";
     //Get the line, if = myprocess, call getpid, else, system(fjnifs)
     getline(cin, input);
@@ -45,6 +62,7 @@ int main() {
         while(getline(history, content)) {
             cout << content;
         }
+        history.close();
         system("quit");
     }
     else if (input == "help") {
